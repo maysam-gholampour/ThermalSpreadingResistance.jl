@@ -4,7 +4,7 @@ CurrentModule = ThermalSpreadingResistance
 
 # ThermalSpreadingResistance
 
-Documentation for [ThermalSpreadingResistance](https://github.com/"Maysam"/ThermalSpreadingResistance.jl).
+Documentation for [ThermalSpreadingResistance](https://github.com/maysam-gholampour/ThermalSpreadingResistance.jl).
 
 ```@index
 ```

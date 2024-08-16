@@ -8,7 +8,7 @@ makedocs(;
     authors="maysam-gholampour <meysam.gholampoor@gmail.com> and contributors",
     sitename="ThermalSpreadingResistance.jl",
     format=Documenter.HTML(;
-        canonical="https://"Maysam".github.io/ThermalSpreadingResistance.jl",
+        canonical="https://maysam-gholampour.github.io/ThermalSpreadingResistance.jl",
         edit_link="main",
         assets=String[],
     ),
@@ -18,6 +18,6 @@ makedocs(;
 )
 
 deploydocs(;
-    repo="github.com/"Maysam"/ThermalSpreadingResistance.jl",
+    repo="github.com/maysam-gholampour/ThermalSpreadingResistance.jl",
     devbranch="main",
 )
