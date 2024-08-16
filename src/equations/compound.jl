@@ -22,9 +22,8 @@ struct ComponudResults{T1<:AbstractFloat}
     Rₛ::T1
 end
 
-function solve(::Compound,a,b,c,d,Q,𝑘ₛ,δₛ,𝑘ₚ,δₚ,hᶜ,number_of_term)
-    Xᶜ = 0.5 * a
-    Yᶜ = 0.5 * b
+function solve(::Compound,a,b,c,d,Q,𝑘ₛ,δₛ,𝑘ₚ,δₚ,hᶜ,Xᶜ,Yᶜ,number_of_term)
+
     A_b = a * b
 
     λ = zeros(number_of_term)

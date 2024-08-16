@@ -15,10 +15,14 @@ module ThermalSpreadingResistance
         𝑘ₚ = 5.0
         δₚ = 0.0001
         hᶜ = 150000.0
-        @compile_workload begin
-            sol = solve(Isotropic(),a,b,c,d,Q,𝑘ₛ,δₛ,hᶜ,100)
 
-            sol = solve(Compound(),a,b,c,d,Q,𝑘ₛ,δₛ,𝑘ₚ,δₚ,hᶜ,100)
+        Xᶜ = 0.5 * a
+        Yᶜ = 0.5 * b
+
+        @compile_workload begin
+            sol = solve(Isotropic(),a,b,c,d,Q,𝑘ₛ,δₛ,hᶜ,Xᶜ,Yᶜ,100)
+
+            sol = solve(Compound(),a,b,c,d,Q,𝑘ₛ,δₛ,𝑘ₚ,δₚ,hᶜ,Xᶜ,Yᶜ,100)
         end
     end
 

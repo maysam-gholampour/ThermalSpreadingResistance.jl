@@ -9,7 +9,10 @@
     δₛ = 0.001
     hᶜ = 150000.0
 
-    sol = solve(Isotropic(),a,b,c,d,Q,𝑘ₛ,δₛ,hᶜ,100)
+    Xᶜ = 0.5 * a
+    Yᶜ = 0.5 * b
+
+    sol = solve(Isotropic(),a,b,c,d,Q,𝑘ₛ,δₛ,hᶜ,Xᶜ,Yᶜ,100)
 
     @test sol.Θ_avg ≈ 13.5885 atol=1e-4
     @test sol.R₁D ≈ 0.00466 atol=1e-5

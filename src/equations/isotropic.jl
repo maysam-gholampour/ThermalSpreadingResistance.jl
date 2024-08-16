@@ -36,9 +36,7 @@ struct IsoResults{T1<:Function,T2<:AbstractFloat}
     Rₛ::T2
 end
 
-function solve(::Isotropic,a,b,c,d,Q,𝑘ₛ,δₛ,hᶜ,number_of_term)
-    Xᶜ = 0.5 * a
-    Yᶜ = 0.5 * b
+function solve(::Isotropic,a,b,c,d,Q,𝑘ₛ,δₛ,hᶜ,Xᶜ,Yᶜ,number_of_term)
     A_b = a * b
 
     λ = zeros(number_of_term)
