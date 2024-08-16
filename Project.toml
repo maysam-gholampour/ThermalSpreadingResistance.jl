@@ -3,6 +3,9 @@ uuid = "f23dcb0d-4a7f-4a20-8d5e-e21c7e78de03"
 authors = ["maysam-gholampour <meysam.gholampoor@gmail.com> and contributors"]
 version = "1.0.0-DEV"
 
+[deps]
+PrecompileTools = "aea7be01-6a6a-4083-8856-8a6e6704d82a"
+
 [compat]
 julia = "1.10"
 
