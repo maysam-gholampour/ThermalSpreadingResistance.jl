@@ -1,5 +1,5 @@
 module ThermalSpreadingResistance
 
-# Write your package code here.
+    include("equations/equations.jl")
 
 end
