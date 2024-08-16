@@ -2,5 +2,6 @@ using ThermalSpreadingResistance
 using Test
 
 @testset "ThermalSpreadingResistance.jl" begin
-    # Write your tests here.
+    include("test_isotropic.jl")
+    include("test_compound.jl")
 end
