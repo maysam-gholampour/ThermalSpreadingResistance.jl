@@ -20,7 +20,8 @@ function _Θ(::Isotropic, x, y, z, A₀, B₀, Aₘ, Aₙ, Aₘₙ, Bₘ, Bₙ, 
     end
     @inbounds @fastmath @simd for i in 1:number_of_term
         @inbounds @fastmath @simd for j in 1:number_of_term
-            sum_mn += cos(λ[i] * x) * cos(δ[j] * y) *
+            sum_mn += cos(λ[i] * x) *
+                      cos(δ[j] * y) *
                       (Aₘₙ[i, j] * cosh(β[i, j] * z) + Bₘₙ[i, j] * sinh(β[i, j] * z))
         end
     end

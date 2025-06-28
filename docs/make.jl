@@ -13,6 +13,7 @@ makedocs(;
         edit_link = "main",
         assets = String[]
     ),
+
     pages = [
         "Home" => "index.md",
     ]
