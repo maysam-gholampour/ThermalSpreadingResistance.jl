@@ -1,12 +1,9 @@
 using ThermalSpreadingResistance
 using Documenter
 
-DocMeta.setdocmeta!(
-    ThermalSpreadingResistance,
-    :DocTestSetup,
-    :(using ThermalSpreadingResistance);
-    recursive = true
-)
+
+DocMeta.setdocmeta!(ThermalSpreadingResistance, :DocTestSetup,
+    :(using ThermalSpreadingResistance); recursive = true)
 
 makedocs(;
     modules = [ThermalSpreadingResistance],
@@ -17,7 +14,10 @@ makedocs(;
         edit_link = "main",
         assets = String[]
     ),
-    pages = ["Home" => "index.md"]
+
+    pages = [
+        "Home" => "index.md",
+    ]
 )
 
 deploydocs(;

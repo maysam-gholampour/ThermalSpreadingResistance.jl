@@ -16,9 +16,11 @@
 
     sol = solve(Compound(), a, b, c, d, Q, 𝑘ₛ, δₛ, 𝑘ₚ, δₚ, hᶜ, Xᶜ, Yᶜ, 100)
 
+
     @test sol.Θ_avg ≈ 366.65039 atol=1e-4
     @test sol.R₁D ≈ 0.276666 atol=1e-5
     @test sol.Rₛ ≈ 0.181646 atol=1e-6
     @test sol.Rₜ ≈ 0.4583129 atol=1e-6
     @test sol.Θ(0, 0, 0) ≈ 103.89258364876 atol=1e-10
+
 end

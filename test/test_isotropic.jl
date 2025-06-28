@@ -21,19 +21,4 @@
     @test sol.Θ(0, 0, 0) ≈ 3.51175e-5 atol=1e-10
 end
 
-begin
-    "plots Θ"
-    # using LinearAlgebra
-    # using Plots
 
-    # X = 0:0.001:a
-    # Y = 0:0.001:b
-    # Θ = zeros((length(X),length(Y)))
-    # @inbounds @simd for i in eachindex(X)
-    #     @inbounds @simd for j in eachindex(Y)
-    #         Θ[i,j] = sol.Θ(X[i],Y[j],0.0)
-    #     end
-    # end
-    # contourf(X,Y,Θ)
-    # plot(diag(Θ))
-end
