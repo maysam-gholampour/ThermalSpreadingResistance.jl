@@ -27,5 +27,3 @@ include("equations/equations.jl")
 end
 
 end
-
-# TODO: make it differentiable
