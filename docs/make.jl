@@ -5,7 +5,7 @@ DocMeta.setdocmeta!(
     ThermalSpreadingResistance,
     :DocTestSetup,
     :(using ThermalSpreadingResistance);
-    recursive = true,
+    recursive = true
 )
 
 makedocs(;
@@ -15,12 +15,12 @@ makedocs(;
     format = Documenter.HTML(;
         canonical = "https://maysam-gholampour.github.io/ThermalSpreadingResistance.jl",
         edit_link = "main",
-        assets = String[],
+        assets = String[]
     ),
-    pages = ["Home" => "index.md"],
+    pages = ["Home" => "index.md"]
 )
 
 deploydocs(;
     repo = "github.com/maysam-gholampour/ThermalSpreadingResistance.jl",
-    devbranch = "main",
+    devbranch = "main"
 )

@@ -9,4 +9,3 @@ include("coefficients.jl")
 include("theta_avg.jl")
 include("isotropic.jl")
 include("compound.jl")
-

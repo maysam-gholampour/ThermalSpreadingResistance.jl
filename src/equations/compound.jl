@@ -1,5 +1,4 @@
 
-
 function _Φ(::Compound, ξ, δₛ, hᶜ, 𝑘ₛ, 𝑘ₚ, δₚ)
     ϱ = (ξ + (hᶜ / 𝑘ₚ)) / (ξ - (hᶜ / 𝑘ₚ))
     κ = 𝑘ₚ / 𝑘ₛ
@@ -16,22 +15,20 @@ function _get_Φ(::Compound, δₛ, hᶜ, 𝑘ₛ, 𝑘ₚ, δₚ)
     return ξ -> _Φ(Compound(), ξ, δₛ, hᶜ, 𝑘ₛ, 𝑘ₚ, δₚ)
 end
 
-
 function _Θ(::Compound, x, y, z, A₀, B₀, Aₘ, Aₙ, Aₘₙ, Bₘ, Bₙ, Bₘₙ, λ, δ, β)
     number_of_term = length(λ)
     sum_m = 0.0
     sum_n = 0.0
     sum_mn = 0.0
-    @inbounds @fastmath @simd for i = 1:number_of_term
+    @inbounds @fastmath @simd for i in 1:number_of_term
         sum_m += cos(λ[i] * x) * (Aₘ[i] * cosh(λ[i] * z) + Bₘ[i] * sinh(λ[i] * z))
         sum_n += cos(δ[i] * y) * (Aₙ[i] * cosh(δ[i] * z) + Bₙ[i] * sinh(δ[i] * z))
     end
-    @inbounds @fastmath @simd for i = 1:number_of_term
-        @inbounds @fastmath @simd for j = 1:number_of_term
-            sum_mn +=
-                cos(λ[i] * x) *
-                cos(δ[j] * y) *
-                (Aₘₙ[i, j] * cosh(β[i, j] * z) + Bₘₙ[i, j] * sinh(β[i, j] * z))
+    @inbounds @fastmath @simd for i in 1:number_of_term
+        @inbounds @fastmath @simd for j in 1:number_of_term
+            sum_mn += cos(λ[i] * x) *
+                      cos(δ[j] * y) *
+                      (Aₘₙ[i, j] * cosh(β[i, j] * z) + Bₘₙ[i, j] * sinh(β[i, j] * z))
         end
     end
     sss = A₀ + B₀ * z + sum_m + sum_n + sum_mn
@@ -43,11 +40,7 @@ function _get_Θ(::Compound, A₀, B₀, Aₘ, Aₙ, Aₘₙ, Bₘ, Bₙ, Bₘ�
     return (x, y, z) -> _Θ(Isotropic(), x, y, z, A₀, B₀, Aₘ, Aₙ, Aₘₙ, Bₘ, Bₙ, Bₘₙ, λ, δ, β)
 end
 
-
-
-
-
-struct ComponudResults{T3<:Function,T1<:AbstractFloat}
+struct ComponudResults{T3 <: Function, T1 <: AbstractFloat}
     Θ::T3
     Θ_avg::T1
     Rₜ::T1
@@ -56,7 +49,6 @@ struct ComponudResults{T3<:Function,T1<:AbstractFloat}
 end
 
 function solve(::Compound, a, b, c, d, Q, 𝑘ₛ, δₛ, 𝑘ₚ, δₚ, hᶜ, Xᶜ, Yᶜ, number_of_term)
-
     A_b = a * b
 
     λ = zeros(number_of_term)
@@ -69,23 +61,13 @@ function solve(::Compound, a, b, c, d, Q, 𝑘ₛ, δₛ, 𝑘ₚ, δₚ, hᶜ, 
     Bₘₙ = zeros((number_of_term, number_of_term))
     β = zeros((number_of_term, number_of_term))
 
-
-
-
-
-
-
     A₀ = (Q / (a * b)) * ((δₛ / 𝑘ₛ) + (1.0 / hᶜ))
     B₀ = -Q / (𝑘ₛ * a * b)
-
-
 
     Θ₁D = (Q / (a * b)) * ((δₚ / 𝑘ₚ) + (δₛ / 𝑘ₛ) + (1.0 / hᶜ))
 
     Φ = _get_Φ(Compound(), δₛ, hᶜ, 𝑘ₛ, 𝑘ₚ, δₚ)
     _calc_coefficients!(Aₘ, Aₙ, Aₘₙ, Bₘ, Bₙ, Bₘₙ, λ, δ, β, a, b, c, d, Q, 𝑘ₛ, Xᶜ, Yᶜ, Φ)
-
-
 
     Θ = _get_Θ(Compound(), A₀, B₀, Aₘ, Aₙ, Aₘₙ, Bₘ, Bₙ, Bₘₙ, λ, δ, β)  # Check Temperature distribution function
 
@@ -95,4 +77,3 @@ function solve(::Compound, a, b, c, d, Q, 𝑘ₛ, δₛ, 𝑘ₚ, δₚ, hᶜ, 
     Rₛ = Rₜ - R₁D
     return ComponudResults(Θ, Θ_avg, Rₜ, R₁D, Rₛ)
 end
-
