@@ -40,7 +40,7 @@ function _get_Θ(::Compound, A₀, B₀, Aₘ, Aₙ, Aₘₙ, Bₘ, Bₙ, Bₘ�
     return (x, y, z) -> _Θ(Isotropic(), x, y, z, A₀, B₀, Aₘ, Aₙ, Aₘₙ, Bₘ, Bₙ, Bₘₙ, λ, δ, β)
 end
 
-struct ComponudResults{T3 <: Function, T1 <: AbstractFloat}
+struct CompoundResults{T3 <: Function, T1 <: AbstractFloat}
     Θ::T3
     Θ_avg::T1
     Rₜ::T1
@@ -76,5 +76,5 @@ function solve(::Compound, a, b, c, d, Q, 𝑘ₛ, δₛ, 𝑘ₚ, δₚ, hᶜ, 
     R₁D = (δₛ / (A_b * 𝑘ₛ)) + (δₚ / (A_b * 𝑘ₚ)) + (1.0 / (hᶜ * A_b))
     Rₛ = Rₜ - R₁D
 
-    return ComponudResults(Θ, Θ_avg, Rₜ, R₁D, Rₛ)
+    return CompoundResults(Θ, Θ_avg, Rₜ, R₁D, Rₛ)
 end
