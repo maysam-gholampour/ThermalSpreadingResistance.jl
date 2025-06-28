@@ -15,7 +15,7 @@ function _get_Φ(::Compound, δₛ, hᶜ, 𝑘ₛ, 𝑘ₚ, δₚ)
     return ξ -> _Φ(Compound(), ξ, δₛ, hᶜ, 𝑘ₛ, 𝑘ₚ, δₚ)
 end
 
-struct ComponudResults{T1 <: AbstractFloat}
+struct CompoundResults{T1 <: AbstractFloat}
     Θ_avg::T1
     Rₜ::T1
     R₁D::T1
@@ -44,5 +44,5 @@ function solve(::Compound, a, b, c, d, Q, 𝑘ₛ, δₛ, 𝑘ₚ, δₚ, hᶜ, 
     Rₜ = Θ_avg / Q
     R₁D = (δₛ / (A_b * 𝑘ₛ)) + (δₚ / (A_b * 𝑘ₚ)) + (1.0 / (hᶜ * A_b))
     Rₛ = Rₜ - R₁D
-    return ComponudResults(Θ_avg, Rₜ, R₁D, Rₛ)
+    return CompoundResults(Θ_avg, Rₜ, R₁D, Rₛ)
 end

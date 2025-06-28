@@ -22,7 +22,6 @@
 end
 
 begin
-    "plots Θ"
     # using LinearAlgebra
     # using Plots
 
