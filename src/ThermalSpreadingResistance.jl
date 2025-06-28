@@ -26,8 +26,4 @@ include("equations/equations.jl")
     end
 end
 
-
-
-
-
 end
