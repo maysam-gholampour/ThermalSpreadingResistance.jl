@@ -61,16 +61,13 @@ function solve(::Compound, a, b, c, d, Q, 𝑘ₛ, δₛ, 𝑘ₚ, δₚ, hᶜ, 
     Bₘₙ = zeros((number_of_term, number_of_term))
     β = zeros((number_of_term, number_of_term))
 
-
     A₀ = (Q / (a * b)) * ((δₛ / 𝑘ₛ) + (1.0 / hᶜ))
     B₀ = -Q / (𝑘ₛ * a * b)
-
 
     Θ₁D = (Q / (a * b)) * ((δₚ / 𝑘ₚ) + (δₛ / 𝑘ₛ) + (1.0 / hᶜ))
 
     Φ = _get_Φ(Compound(), δₛ, hᶜ, 𝑘ₛ, 𝑘ₚ, δₚ)
     _calc_coefficients!(Aₘ, Aₙ, Aₘₙ, Bₘ, Bₙ, Bₘₙ, λ, δ, β, a, b, c, d, Q, 𝑘ₛ, Xᶜ, Yᶜ, Φ)
-
 
     Θ = _get_Θ(Compound(), A₀, B₀, Aₘ, Aₙ, Aₘₙ, Bₘ, Bₙ, Bₘₙ, λ, δ, β)  # Check Temperature distribution function
 
@@ -80,5 +77,4 @@ function solve(::Compound, a, b, c, d, Q, 𝑘ₛ, δₛ, 𝑘ₚ, δₚ, hᶜ, 
     Rₛ = Rₜ - R₁D
 
     return ComponudResults(Θ, Θ_avg, Rₜ, R₁D, Rₛ)
-
 end

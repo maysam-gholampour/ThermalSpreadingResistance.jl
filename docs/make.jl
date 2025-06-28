@@ -1,7 +1,6 @@
 using ThermalSpreadingResistance
 using Documenter
 
-
 DocMeta.setdocmeta!(ThermalSpreadingResistance, :DocTestSetup,
     :(using ThermalSpreadingResistance); recursive = true)
 
