@@ -29,5 +29,3 @@ end
 end
 
 # TODO: make it differentiable
-
-
