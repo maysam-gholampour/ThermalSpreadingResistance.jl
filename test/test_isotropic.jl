@@ -12,16 +12,16 @@
     Xᶜ = 0.5 * a
     Yᶜ = 0.5 * b
 
-    sol = solve(Isotropic(),a,b,c,d,Q,𝑘ₛ,δₛ,hᶜ,Xᶜ,Yᶜ,100)
+    sol = solve(Isotropic(), a, b, c, d, Q, 𝑘ₛ, δₛ, hᶜ, Xᶜ, Yᶜ, 100)
 
     @test sol.Θ_avg ≈ 13.5885 atol=1e-4
     @test sol.R₁D ≈ 0.00466 atol=1e-5
     @test sol.Rₛ ≈ 0.012319 atol=1e-6
     @test sol.Rₜ ≈ 0.016985 atol=1e-6
-    @test sol.Θ(0,0,0)≈ 3.51175e-5 atol=1e-10
+    @test sol.Θ(0, 0, 0) ≈ 3.51175e-5 atol=1e-10
 end
 
-begin "plots Θ"
+begin
     # using LinearAlgebra
     # using Plots
 
