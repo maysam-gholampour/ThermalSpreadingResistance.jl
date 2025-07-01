@@ -1,19 +1,40 @@
-function _Θ_avg(Aₘ, Aₙ, Aₘₙ, λ, δ, c, d, Xᶜ, Yᶜ, Θ₁D)
-    number_of_term = length(λ)
+function _Θ_avg(a,b,c,d,Q,𝑘ₛ,Xᶜ,Yᶜ,Φ,Θ₁D,number_of_term)
+    
     sum_m = 0.0
     sum_n = 0.0
     sum_mn = 0.0
     @inbounds @fastmath @simd for i in 1:number_of_term
-        sum_m += Aₘ[i] * cos(λ[i] * Xᶜ) * sin(0.5 * λ[i] * c) / (λ[i] * c)
-        sum_n += Aₙ[i] * cos(δ[i] * Yᶜ) * sin(0.5 * δ[i] * d) / (δ[i] * d)
+        λ = i * π / a
+        Aₘ = 2 * Q * (
+            sin(0.5 * (2Xᶜ + c) * λ) - sin(0.5 * (2Xᶜ - c) * λ)
+            ) / (a * b * c * 𝑘ₛ * (λ ^ 2) * Φ(λ))
+        
+        δ = i * π / b
+        Aₙ = 2 * Q * (
+            sin(0.5 * (2Yᶜ + c) * δ) - sin(0.5 * (2Yᶜ - c) * δ)
+            ) / (a * b * d * 𝑘ₛ * (δ ^ 2) * Φ(δ))
+
+        sum_m += Aₘ * cos(λ * Xᶜ) * sin(0.5 * λ * c) / (λ * c)
+        sum_n += Aₙ * cos(δ * Yᶜ) * sin(0.5 * δ * d) / (δ * d)
     end
     @inbounds @fastmath @simd for i in 1:number_of_term
+        λ = i * π / a
         @inbounds @fastmath @simd for j in 1:number_of_term
-            sum_mn += Aₘₙ[i, j] *
-                      cos(λ[i] * Xᶜ) *
-                      cos(δ[j] * Yᶜ) *
-                      sin(0.5 * λ[i] * c) *
-                      sin(0.5 * δ[j] * d) / (λ[i] * c * δ[j] * d)
+            δ = j * π / b
+            β = √(λ^2 + δ^2)
+            Aₘₙ = 16 * Q * cos(λ * Xᶜ) * sin(0.5 * λ * c) * 
+                        cos(δ * Yᶜ) * sin(0.5 * δ * d) / 
+                        (a * b * c * d * 𝑘ₛ * β * λ * δ * Φ(β))
+            
+
+
+
+
+
+                        
+            sum_mn += Aₘₙ * cos(λ * Xᶜ) * cos(δ * Yᶜ) *
+                        sin(0.5 * λ * c) * sin(0.5 * δ * d) / 
+                        (λ * c * δ * d)
         end
     end
     return Θ₁D + 2sum_m + 2sum_n + 4sum_mn
