@@ -17,7 +17,7 @@ function _calc_coefficients_vectorial!(i,a,b,c,d,Q,𝑘ₛ,Xᶜ,Yᶜ,Φ)
         sin(0.5 * (2Yᶜ + c) * δ) - sin(0.5 * (2Yᶜ - c) * δ)
         ) / (a * b * d * 𝑘ₛ * (δ ^ 2) * Φ(δ))
     Bₙ = -Φ(δ) * Aₙ
-    
+    return Aₘ, Bₘ, Aₙ, Bₙ, λ, δ
 end
 function _calc_coefficients_matrix!(i,j,a,b,c,d,Q,𝑘ₛ,Xᶜ,Yᶜ,Φ)
     λ = i * π / a
@@ -27,7 +27,7 @@ function _calc_coefficients_matrix!(i,j,a,b,c,d,Q,𝑘ₛ,Xᶜ,Yᶜ,Φ)
                 cos(δ * Yᶜ) * sin(0.5 * δ * d) / 
                 (a * b * c * d * 𝑘ₛ * β * λ * δ * Φ(β))
     Bₘₙ = -Φ(β) * Aₘₙ
-    
+    return Aₘₙ, Bₘₙ, λ, δ, β
 end
 function _Θ(::Isotropic,x,y,z,A₀,B₀,a,b,c,d,Q,𝑘ₛ,Xᶜ,Yᶜ,Φ,Θ₁D,number_of_term) #a,b,c,d,Q,𝑘ₛ,Xᶜ,Yᶜ,Φ,Θ₁D,number_of_term
     
@@ -36,16 +36,16 @@ function _Θ(::Isotropic,x,y,z,A₀,B₀,a,b,c,d,Q,𝑘ₛ,Xᶜ,Yᶜ,Φ,Θ₁D,n
     sum_mn = 0.0
     @inbounds  @fastmath @simd for i in 1:number_of_term
 
-        _calc_coefficients!(i,a,b,c,d,Q,𝑘ₛ,Xᶜ,Yᶜ,Φ)
+        Aₘ, Bₘ, Aₙ, Bₙ, λ, δ=_calc_coefficients_vectorial!(i,a,b,c,d,Q,𝑘ₛ,Xᶜ,Yᶜ,Φ)
         
-
+        
         sum_m += cos(λ * x) * (Aₘ * cosh(λ * z) + Bₘ * sinh(λ * z))
         sum_n += cos(δ * y) * (Aₙ * cosh(δ * z) + Bₙ * sinh(δ * z))
     end
     @inbounds @fastmath @simd  for i in 1:number_of_term
         
         @inbounds @fastmath @simd  for j in 1:number_of_term
-        _calc_coefficients_matrix!(i,j,a,b,c,d,Q,𝑘ₛ,Xᶜ,Yᶜ,Φ)    
+        Aₘₙ, Bₘₙ, λ, δ, β=_calc_coefficients_matrix!(i,j,a,b,c,d,Q,𝑘ₛ,Xᶜ,Yᶜ,Φ)    
         sum_mn += cos(λ * x) * cos(δ * y) * 
                 (Aₘₙ * cosh(β * z) + Bₘₙ * sinh(β * z))
         end
