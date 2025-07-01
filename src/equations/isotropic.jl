@@ -5,7 +5,7 @@ function _get_Φ(::Isotropic,δₛ,hᶜ,𝑘ₛ)
         (ξ * cosh(ξ * δₛ) + (hᶜ / 𝑘ₛ) * sinh(ξ * δₛ)) 
     return ξ -> _Φ(Isotropic(),ξ,δₛ,hᶜ,𝑘ₛ)
 end
-#TODO: return to the original
+
 function _calc_coefficients_vectorial!(i,a,b,c,d,Q,𝑘ₛ,Xᶜ,Yᶜ,Φ)
     λ = i * π / a
     Aₘ = 2 * Q * (
