@@ -37,7 +37,7 @@ function _Θ(::Compound, x, y, z, A₀, B₀, Aₘ, Aₙ, Aₘₙ, Bₘ, Bₙ, B
 end
 
 function _get_Θ(::Compound, A₀, B₀, Aₘ, Aₙ, Aₘₙ, Bₘ, Bₙ, Bₘₙ, λ, δ, β)
-    return (x, y, z) -> _Θ(Isotropic(), x, y, z, A₀, B₀, Aₘ, Aₙ, Aₘₙ, Bₘ, Bₙ, Bₘₙ, λ, δ, β)
+    return (x, y, z) -> _Θ(Compound(), x, y, z, A₀, B₀, Aₘ, Aₙ, Aₘₙ, Bₘ, Bₙ, Bₘₙ, λ, δ, β)
 end
 
 struct CompoundResults{T3 <: Function, T1 <: AbstractFloat}
@@ -71,7 +71,7 @@ function solve(::Compound, a, b, c, d, Q, 𝑘ₛ, δₛ, 𝑘ₚ, δₚ, hᶜ, 
 
     Θ = _get_Θ(Compound(), A₀, B₀, Aₘ, Aₙ, Aₘₙ, Bₘ, Bₙ, Bₘₙ, λ, δ, β)  # Check Temperature distribution function
 
-    Θ_avg = _Θ_avg(Aₘ, Aₙ, Aₘₙ, λ, δ, c, d, Xᶜ, Yᶜ, Θ₁D)
+    Θ_avg = _Θ_avg(a,b,c,d,Q,𝑘ₛ,Xᶜ,Yᶜ,Φ,Θ₁D,number_of_term)
     Rₜ = Θ_avg / Q
     R₁D = (δₛ / (A_b * 𝑘ₛ)) + (δₚ / (A_b * 𝑘ₚ)) + (1.0 / (hᶜ * A_b))
     Rₛ = Rₜ - R₁D
