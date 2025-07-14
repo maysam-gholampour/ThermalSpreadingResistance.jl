@@ -1,3 +1,4 @@
+using Test
 
 @testset "Isotropic" begin
     a = 0.05
@@ -20,3 +21,8 @@
     @test sol.Rₜ ≈ 0.016985 atol=1e-6
     @test sol.Θ(0, 0, 0) ≈ 3.51175e-5 atol=1e-10
 end
+
+
+
+
+

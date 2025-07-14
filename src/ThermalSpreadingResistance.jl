@@ -4,6 +4,7 @@ using PrecompileTools: @setup_workload, @compile_workload
 
 include("equations/equations.jl")
 
+
 @setup_workload begin
     a = 0.05
     b = 0.05
@@ -22,7 +23,7 @@ include("equations/equations.jl")
     @compile_workload begin
         sol = solve(Isotropic(), a, b, c, d, Q, 𝑘ₛ, δₛ, hᶜ, Xᶜ, Yᶜ, 100)
 
-        sol = solve(Compound(), a, b, c, d, Q, 𝑘ₛ, δₛ, 𝑘ₚ, δₚ, hᶜ, Xᶜ, Yᶜ, 100)
+        #sol = solve(Compound(), a, b, c, d, Q, 𝑘ₛ, δₛ, 𝑘ₚ, δₚ, hᶜ, Xᶜ, Yᶜ, 100)
     end
 end
 
