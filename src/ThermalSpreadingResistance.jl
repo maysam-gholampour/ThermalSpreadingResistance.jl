@@ -4,7 +4,6 @@ using PrecompileTools: @setup_workload, @compile_workload
 
 include("equations/equations.jl")
 
-
 @setup_workload begin
     a = 0.05
     b = 0.05

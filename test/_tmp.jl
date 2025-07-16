@@ -16,16 +16,16 @@ Yᶜ = 0.5 * b
 
 number_of_term = 50
 
-
-
 Θ₁D = 0.01
 
 #function _Θ_avgr(a,b,c,d,Q,𝑘ₛ,δₛ,hᶜ,Xᶜ,Yᶜ,Θ₁D,number_of_term)
 
-_Θ_avgr(a,b,c,d,Q,𝑘ₛ,δₛ,hᶜ,Xᶜ,Yᶜ,0.01,number_of_term)
+_Θ_avg(Isotropic(), a, b, c, d, Q, 𝑘ₛ, δₛ, hᶜ, Xᶜ, Yᶜ, Θ₁D, number_of_term)
 
-@code_warntype _Θ_avgr(a,b,c,d,Q,𝑘ₛ,δₛ,hᶜ,Xᶜ,Yᶜ,0.01,number_of_term)
+@code_warntype _Θ_avg(Isotropic(), a, b, c, d, Q, 𝑘ₛ, δₛ, hᶜ, Xᶜ, Yᶜ, Θ₁D, number_of_term)
+@code_warntype solve(Isotropic(), a, b, c, d, Q, 𝑘ₛ, δₛ, hᶜ, Xᶜ, Yᶜ, 100).Rₛ
 
 using BenchmarkTools
 
-@benchmark _Θ_avgr($a,$b,$c,$d,$Q,$𝑘ₛ,$δₛ,$hᶜ,$Xᶜ,$Yᶜ,0.01,$number_of_term)
+@benchmark _Θ_avg(Isotropic(), a, b, c, d, Q, 𝑘ₛ, δₛ, hᶜ, Xᶜ, Yᶜ, Θ₁D, number_of_term)
+@benchmark solve(Isotropic(), a, b, c, d, Q, 𝑘ₛ, δₛ, hᶜ, Xᶜ, Yᶜ, 100)

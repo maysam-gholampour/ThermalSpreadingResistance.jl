@@ -9,4 +9,4 @@ struct Compound <: Plate end
 include("coefficients.jl")
 include("theta_avg.jl")
 include("isotropic.jl")
-include("compound.jl") 
+include("compound.jl")
