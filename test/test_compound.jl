@@ -1,5 +1,4 @@
 
-using Test
 @testset "Compound" begin
     a = 0.05
     b = 0.05
