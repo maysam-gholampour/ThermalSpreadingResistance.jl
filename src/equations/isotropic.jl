@@ -1,56 +1,18 @@
-function _Φ(ξ,δₛ,hᶜ,𝑘ₛ)
-    return (ξ * sinh(ξ * δₛ) + (hᶜ / 𝑘ₛ) * cosh(ξ * δₛ)) / 
-        (ξ * cosh(ξ * δₛ) + (hᶜ / 𝑘ₛ) * sinh(ξ * δₛ)) 
-    
-end
 
-function _Θ_avgr(a,b,c,d,Q,𝑘ₛ,δₛ,hᶜ,Xᶜ,Yᶜ,Θ₁D,number_of_term)
-    
-    sum_m = 0.0
-    sum_n = 0.0
-    sum_mn = 0.0
-    @inbounds @fastmath @simd for i in 1:number_of_term
-        λ = i * π / a
-        Aₘ = 2 * Q * (
-            sin(0.5 * (2Xᶜ + c) * λ) - sin(0.5 * (2Xᶜ - c) * λ)
-            ) / (a * b * c * 𝑘ₛ * (λ ^ 2) * _Φ(λ,δₛ,hᶜ,𝑘ₛ))
-        
-        δ = i * π / b
-        Aₙ = 2 * Q * (
-            sin(0.5 * (2Yᶜ + c) * δ) - sin(0.5 * (2Yᶜ - c) * δ)
-            ) / (a * b * d * 𝑘ₛ * (δ ^ 2) * _Φ(δ,δₛ,hᶜ,𝑘ₛ))
 
-        sum_m += Aₘ * cos(λ * Xᶜ) * sin(0.5 * λ * c) / (λ * c)
-        sum_n += Aₙ * cos(δ * Yᶜ) * sin(0.5 * δ * d) / (δ * d)
-    end
 
-    @inbounds @fastmath @simd for i in 1:number_of_term
-        λ = i * π / a
-        @inbounds @fastmath @simd for j in 1:number_of_term
-            δ = j * π / b
-            β = √(λ^2 + δ^2)
-            Aₘₙ = 16 * Q * cos(λ * Xᶜ) * sin(0.5 * λ * c) * 
-                        cos(δ * Yᶜ) * sin(0.5 * δ * d) / 
-                        (a * b * c * d * 𝑘ₛ * β * λ * δ * _Φ(β,δₛ,hᶜ,𝑘ₛ))                        
-            sum_mn += Aₘₙ * cos(λ * Xᶜ) * cos(δ * Yᶜ) *
-                        sin(0.5 * λ * c) * sin(0.5 * δ * d) / 
-                        (λ * c * δ * d)
-        end
-    end
-    return Θ₁D + 2sum_m + 2sum_n + 4sum_mn
-end
 
 function _calc_coefficients_vectorial!(i,a,b,c,d,Q,𝑘ₛ,δₛ,hᶜ,Xᶜ,Yᶜ)
     λ = i * π / a
     Aₘ = 2 * Q * (
             sin(0.5 * (2Xᶜ + c) * λ) - sin(0.5 * (2Xᶜ - c) * λ)
-            ) / (a * b * c * 𝑘ₛ * (λ ^ 2) * _Φ(λ,δₛ,hᶜ,𝑘ₛ))
-    Bₘ = -_Φ(λ,δₛ,hᶜ,𝑘ₛ) * Aₘ
+            ) / (a * b * c * 𝑘ₛ * (λ ^ 2) * _Φ(Isotropic(),λ,δₛ,hᶜ,𝑘ₛ))
+    Bₘ = -_Φ(Isotropic(),λ,δₛ,hᶜ,𝑘ₛ) * Aₘ
     δ = i * π / b
     Aₙ = 2 * Q * (
         sin(0.5 * (2Yᶜ + c) * δ) - sin(0.5 * (2Yᶜ - c) * δ)
-        ) / (a * b * d * 𝑘ₛ * (δ ^ 2) * _Φ(δ,δₛ,hᶜ,𝑘ₛ))
-    Bₙ = -_Φ(δ,δₛ,hᶜ,𝑘ₛ) * Aₙ
+        ) / (a * b * d * 𝑘ₛ * (δ ^ 2) * _Φ(Isotropic(),δ,δₛ,hᶜ,𝑘ₛ))
+    Bₙ = -_Φ(Isotropic(),δ,δₛ,hᶜ,𝑘ₛ) * Aₙ
     return Aₘ, Bₘ, Aₙ, Bₙ, λ, δ
 end
 
@@ -60,8 +22,8 @@ function _calc_coefficients_matrix!(i,j,a,b,c,d,Q,𝑘ₛ,δₛ,hᶜ,Xᶜ,Yᶜ)
     β = √(λ^2 + δ^2)
     Aₘₙ = 16 * Q * cos(λ * Xᶜ) * sin(0.5 * λ * c) * 
                 cos(δ * Yᶜ) * sin(0.5 * δ * d) / 
-                (a * b * c * d * 𝑘ₛ * β * λ * δ * _Φ(β,δₛ,hᶜ,𝑘ₛ))
-    Bₘₙ = -_Φ(β,δₛ,hᶜ,𝑘ₛ) * Aₘₙ
+                (a * b * c * d * 𝑘ₛ * β * λ * δ * _Φ(Isotropic(),β,δₛ,hᶜ,𝑘ₛ))
+    Bₘₙ = -_Φ(Isotropic(),β,δₛ,hᶜ,𝑘ₛ) * Aₘₙ
     return Aₘₙ, Bₘₙ, λ, δ, β
 end
 function _Θ(::Isotropic,x,y,z,A₀,B₀,a,b,c,d,Q,𝑘ₛ,δₛ,hᶜ,Xᶜ,Yᶜ,Θ₁D,number_of_term) #a,b,c,d,Q,𝑘ₛ,Xᶜ,Yᶜ,Φ,Θ₁D,number_of_term
@@ -110,26 +72,11 @@ function solve(::Isotropic,a,b,c,d,Q,𝑘ₛ,δₛ,hᶜ,Xᶜ,Yᶜ,number_of_term
 
     #Φ = _get_Φ(Isotropic(),δₛ,hᶜ,𝑘ₛ)
     Θ = _get_Θ(Isotropic(),A₀,B₀,a,b,c,d,Q,𝑘ₛ,δₛ,hᶜ,Xᶜ,Yᶜ,Θ₁D,number_of_term)
-    Θ_avg = _Θ_avgr(a,b,c,d,Q,𝑘ₛ,δₛ,hᶜ,Xᶜ,Yᶜ,Θ₁D,number_of_term)
+    Θ_avg = _Θ_avg(Isotropic(),a,b,c,d,Q,𝑘ₛ,δₛ,hᶜ,Xᶜ,Yᶜ,Θ₁D,number_of_term)
     Rₜ = Θ_avg / Q
     R₁D = (δₛ / (A_b * 𝑘ₛ)) + (1.0 / (hᶜ * A_b))
     Rₛ = Rₜ - R₁D
     return IsoResults(Θ,Θ_avg,Rₜ,R₁D,Rₛ)
 end
 
-# TODO: delete the comented code below
-# a = 1.0
-# b = 1.0
-# c = 0.5
-# d = 0.5
-# Q = 10.0
-# 𝑘ₛ = 200.0
-# δₛ = 0.01
-# hᶜ = 1000.0
-# Xᶜ = 0.0
-# Yᶜ = 0.0
-# Θ₁D = 0.05
-# number_of_term = 10
-
-# resultt = _Θ_avgr(a, b, c, d, Q, 𝑘ₛ, δₛ, hᶜ, Xᶜ, Yᶜ, Θ₁D, number_of_term)
-# println("Result of _Θ_avgr: ", resultt)
+    
