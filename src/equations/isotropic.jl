@@ -69,7 +69,7 @@ function solve(::Isotropic, a, b, c, d, Q, 𝑘ₛ, δₛ, hᶜ, Xᶜ, Yᶜ, num
     B₀ = -Q / (𝑘ₛ * a * b)
     Θ₁D = A₀
 
-    #Φ = _get_Φ(Isotropic(),δₛ,hᶜ,𝑘ₛ)
+    
     Θ = _get_Θ(Isotropic(), A₀, B₀, a, b, c, d, Q, 𝑘ₛ, δₛ, hᶜ, Xᶜ, Yᶜ, Θ₁D, number_of_term)
     Θ_avg = _Θ_avg(Isotropic(), a, b, c, d, Q, 𝑘ₛ, δₛ, hᶜ, Xᶜ, Yᶜ, Θ₁D, number_of_term)
     Rₜ = Θ_avg / Q
