@@ -5,4 +5,5 @@ using Test
     include("test_isotropic.jl")
     include("test_compound.jl")
     include("test_differentiability.jl")
+    include("test_stability.jl")
 end
