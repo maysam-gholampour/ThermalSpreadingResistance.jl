@@ -30,7 +30,7 @@ function _Θ_avg(plate, a, b, c, d, Q, 𝑘ₛ, δₛ, hᶜ, Xᶜ, Yᶜ, Θ₁D,
 
         δ = i * π / b
         Aₙ = 2 * Q * (
-            sin(0.5 * (2Yᶜ + c) * δ) - sin(0.5 * (2Yᶜ - c) * δ)
+            sin(0.5 * (2Yᶜ + d) * δ) - sin(0.5 * (2Yᶜ - d) * δ)
         ) / (a * b * d * 𝑘ₛ * (δ ^ 2) * _Φ(plate, δ, δₛ, hᶜ, 𝑘ₛ, 𝑘ₚ, δₚ))
 
         sum_m += Aₘ * cos(λ * Xᶜ) * sin(0.5 * λ * c) / (λ * c)

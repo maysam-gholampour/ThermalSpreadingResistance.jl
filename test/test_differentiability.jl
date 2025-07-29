@@ -26,7 +26,7 @@ using ReverseDiff
     @test enzyme_gradient[1][1] ≈ 16.31377 atol=1e-4
     @test fowarddiff_gradient[1] ≈ 16.31377 atol=1e-4
     @test reversediff_gradient[1] ≈ 16.31377 atol=1e-4
-    @test enzyme_gradient[1][3] ≈ -104.1185 atol=1e-4
-    @test fowarddiff_gradient[3] ≈ -104.1185 atol=1e-4
-    @test reversediff_gradient[3] ≈ -104.1185 atol=1e-4
+    @test enzyme_gradient[1][3] ≈ -124.7000 atol=1e-4
+    @test fowarddiff_gradient[3] ≈ -124.7000 atol=1e-4
+    @test reversediff_gradient[3] ≈ -124.7000 atol=1e-4
 end
