@@ -1,5 +1,6 @@
 export Plate, Isotropic, Compound
 export solve
+export _Θ_avgr
 
 abstract type Plate end
 struct Isotropic <: Plate end

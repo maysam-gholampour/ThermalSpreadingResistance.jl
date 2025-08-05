@@ -1,22 +1,30 @@
 
 @testset "Isotropic" begin
-    a = 0.05
-    b = 0.05
+    a = 0.300
+    b = 0.300
     c = 0.025
     d = 0.025
-    Q = 800.0
-    𝑘ₛ = 200.0
-    δₛ = 0.001
-    hᶜ = 150000.0
+    Q = 10
+    𝑘ₛ = 10
+    δₛ = 10/1000
+    hᶜ = 10
+    Xᶜ = 0.090
+    Yᶜ = 0.090
+    number_terms=50
 
-    Xᶜ = 0.5 * a
-    Yᶜ = 0.5 * b
+    Q2 = 15
+    Xᶜ2 = 0.21
+    Yᶜ2 = 0.21
 
-    sol = solve(Isotropic(), a, b, c, d, Q, 𝑘ₛ, δₛ, hᶜ, Xᶜ, Yᶜ, 100)
+    sol = solve(Isotropic(), a, b, c, d, Q, 𝑘ₛ, δₛ, hᶜ, Xᶜ, Yᶜ, number_terms)
 
-    @test sol.Θ_avg ≈ 13.5885 atol=1e-4
-    @test sol.R₁D ≈ 0.00466 atol=1e-5
-    @test sol.Rₛ ≈ 0.012319 atol=1e-6
-    @test sol.Rₜ ≈ 0.016985 atol=1e-6
-    @test sol.Θ(0, 0, 0) ≈ 3.51175e-5 atol=1e-10
+    sol2 = solve(Isotropic(), a, b, c, d, Q2, 𝑘ₛ, δₛ, hᶜ, Xᶜ2, Yᶜ2, number_terms)
+
+    @test sol.Θ_avg ≈ 47.7094 atol=1e-4
+    @test sol.R₁D ≈ 1.1222 atol=1e-4
+    @test sol.Rₛ ≈ 3.6487 atol=1e-4
+    @test sol.Rₜ ≈ 4.7709 atol=1e-4
+
+    @test sol.Θ(Xᶜ, Yᶜ, 0)+sol2.Θ(Xᶜ, Yᶜ, 0)+25 ≈ 84.9386 atol=1e-4
+    @test sol.Θ(Xᶜ2, Yᶜ2, 0)+sol2.Θ(Xᶜ2, Yᶜ2, 0)+25 ≈ 108.38415 atol=1e-4
 end
